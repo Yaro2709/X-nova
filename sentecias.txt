@@ -1,0 +1,17 @@
+ALTER TABLE `uni1_users` DROP `geologo`;
+ALTER TABLE `uni1_users` DROP `almirante`;
+ALTER TABLE `uni1_users` DROP `tecnocrata`;
+ALTER TABLE `uni1_users` DROP `ingeniero`;
+ALTER TABLE `uni1_users` DROP `comandante`;
+ALTER TABLE `uni1_users`ADD`commander` varchar(11) NOT NULL default '0';
+ALTER TABLE `uni1_users`ADD`commander_time` varchar(11) NOT NULL default '0';
+ALTER TABLE `uni1_users`ADD`admiral` varchar(11) NOT NULL default '0';
+ALTER TABLE `uni1_users`ADD`admiral_time` varchar(11) NOT NULL default '0';
+ALTER TABLE `uni1_users`ADD`engineer` varchar(11) NOT NULL default '0';
+ALTER TABLE `uni1_users`ADD`engineer_time` varchar(11) NOT NULL default '0';
+ALTER TABLE `uni1_users`ADD`geologe` varchar(11) NOT NULL default '0';
+ALTER TABLE `uni1_users`ADD`geologe_time` varchar(11) NOT NULL default '0';
+ALTER TABLE `uni1_users`ADD`technocratic` varchar(11) NOT NULL default '0';
+ALTER TABLE `uni1_users`ADD`technocratic_time` varchar(11) NOT NULL default '0';
+ALTER TABLE `uni1_users` ADD `raza` VARCHAR( 2 ) NOT NULL AFTER `wons`;
+ALTER TABLE `uni1_users_valid` ADD `raza` VARCHAR( 2 ) NOT NULL AFTER `lang`;
