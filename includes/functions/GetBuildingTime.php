@@ -1,9 +1,10 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
 
@@ -22,43 +23,43 @@ if(!defined('INSIDE')) die('Hacking attempt!');
 
 	function GetBuildingTime ($USER, $PLANET, $Element, $Destroy = false)
 	{
-		global $pricelist, $resource, $reslist, $CONF, $requeriments;
+		global $pricelist, $resource, $reslist, $requeriments;
 		
 		$CONF	= getConfig($USER['universe']);
 		$level = isset($PLANET[$resource[$Element]]) ? $PLANET[$resource[$Element]] : $USER[$resource[$Element]];
-		
-		$Cost   = floor($pricelist[$Element]['metal'] * pow($pricelist[$Element]['factor'], $level)) + floor($pricelist[$Element]['crystal'] * pow($pricelist[$Element]['factor'], $level)) + floor($pricelist[$Element]['deuterium'] * pow($pricelist[$Element]['factor'], $level));
+				
+		$Cost   = floor($pricelist[$Element]['metal'] * pow($pricelist[$Element]['factor'], $level)) + floor($pricelist[$Element]['crystal'] * pow($pricelist[$Element]['factor'], $level));
 	
 		if (in_array($Element, $reslist['build'])) {
 			
 		if($USER['commander'] >= 1 xor $USER['raza'] == 0) {		
-			$tiempo	= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[14]])) * pow(0.5, $PLANET[$resource[15]]) + 0.001;	
+			$tiempo	= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[14]])) * pow(0.5, $PLANET[$resource[15]]);	
 			$porcentaje = $tiempo * 10/100;
 			$time = $tiempo - $porcentaje;
 		} elseif($USER['commander'] >= 1 and $USER['raza'] == 0) {
-		$tiempo	= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[14]])) * pow(0.5, $PLANET[$resource[15]]) + 0.001;	
+		$tiempo	= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[14]])) * pow(0.5, $PLANET[$resource[15]]);	
 			$porcentaje = $tiempo * 20/100;
 			$time = $tiempo - $porcentaje;
 		} else {
-			$time			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[14]])) * pow(0.5, $PLANET[$resource[15]]) + 0.001;	
+			$time			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[14]])) * pow(0.5, $PLANET[$resource[15]]);	
 		} } elseif (in_array($Element, $reslist['fleet'])) {
 			if($USER['commander'] >= 1 xor $USER['raza'] == 1) {
-			$tiempo			= $Cost / ($CONF['game_speed'] * (1 + ($PLANET[$resource[21]] + $PLANET[$resource[14]]))) * pow(0.5, $PLANET[$resource[15]]) + 0.6;
+			@$tiempo			= $Cost / ($CONF['game_speed'] * (1 + ($PLANET[$resource[21]] + $PLANET[$resource[14]]))) * pow(0.5, $PLANET[$resource[15]]);
 			$porcentaje = $tiempo * 10/100;
 			$time = $tiempo - $porcentaje;
 		} elseif($USER['commander'] >= 1 and $USER['raza'] == 1) {
-			$tiempo			= $Cost / ($CONF['game_speed'] * (1 + ($PLANET[$resource[21]] + $PLANET[$resource[14]]))) * pow(0.5, $PLANET[$resource[15]]) + 0.6;
+			@$tiempo			= $Cost / ($CONF['game_speed'] * (1 + ($PLANET[$resource[21]] + $PLANET[$resource[14]]))) * pow(0.5, $PLANET[$resource[15]]);
 			$porcentaje = $tiempo * 20/100;
 			$time = $tiempo - $porcentaje;
 		} else {
-			$time			= $Cost / ($CONF['game_speed'] * (1 + ($PLANET[$resource[21]] + $PLANET[$resource[14]]))) * pow(0.5, $PLANET[$resource[15]]) + 0.6;	
+			@$time			= $Cost / ($CONF['game_speed'] * (1 + ($PLANET[$resource[21]] + $PLANET[$resource[14]]))) * pow(0.5, $PLANET[$resource[15]]);	
 		} }elseif (in_array($Element, $reslist['defense'])) {
 			if($USER['commander'] >= 1) {
-			$tiempo= $Cost / ($CONF['game_speed'] * (1 + ($PLANET[$resource[21]] + $PLANET[$resource[14]]))) * pow(0.5, $PLANET[$resource[15]]) + 0.6;
+			@$tiempo= $Cost / ($CONF['game_speed'] * (1 + ($PLANET[$resource[21]] + $PLANET[$resource[14]]))) * pow(0.5, $PLANET[$resource[15]]);
 			$porcentaje = $tiempo * 10/100;
 			$time = $tiempo - $porcentaje;
 		} else {
-			$time= $Cost / ($CONF['game_speed'] * (1 + ($PLANET[$resource[21]] + $PLANET[$resource[14]]))) * pow(0.5, $PLANET[$resource[15]]) + 0.6;
+			@$time= $Cost / ($CONF['game_speed'] * (1 + ($PLANET[$resource[21]] + $PLANET[$resource[14]]))) * pow(0.5, $PLANET[$resource[15]]);
 		} } elseif (in_array($Element, $reslist['tech']))
 		{
 			if(is_array($PLANET[$resource[31].'_inter']))
@@ -75,31 +76,31 @@ if(!defined('INSIDE')) die('Hacking attempt!');
 			
 			if($USER['commander'] >= 1 and $USER['technocratic'] >= 1) {
 				#Nuevo valor de prueba, hay que ver si ahora resulta.
-				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]) + (0.3 - $comandante_tecnos);
+				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]);
 				$porcentaje = $tiempo * 35/100;
 				$time = $tiempo - $porcentaje;
 			} elseif($USER['commander'] >= 1 and $USER['technocratic'] <= 0) {
-				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]) + (0.3 - $comandante_tecnos);
+				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]);
 				$porcentaje = $tiempo * 10/100;
 				$time = $tiempo - $porcentaje;
 			}elseif($USER['commander'] <= 0 and $USER['technocratic'] >= 1) {
-				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]) + (0.3 - $comandante_tecnos);
+				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]);
 				$porcentaje = $tiempo * 25/100;
 				$time = $tiempo - $porcentaje;
 			} elseif($USER['commander'] >= 1 and $USER['technocratic'] >= 1 and $USER['raza'] == 1) {
-				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]) + (0.3 - $comandante_tecnos);
+				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]);
 				$porcentaje = $tiempo * 45/100;
 				$time = $tiempo - $porcentaje;
 			} elseif($USER['commander'] >= 1 and $USER['technocratic'] <= 0 and $USER['raza'] == 1) {
-				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]) + (0.3 - $comandante_tecnos);
+				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]);
 				$porcentaje = $tiempo * 20/100;
 				$time = $tiempo - $porcentaje;
 			}elseif($USER['commander'] <= 0 and $USER['technocratic'] >= 1 and $USER['raza'] == 1) {
-				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]) + (0.3 - $comandante_tecnos);
+				$tiempo			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]);
 				$porcentaje = $tiempo * 35/100;
 				$time = $tiempo - $porcentaje;
 			} else { #Nuevo valor de prueba, hay que ver si ahora resulta (Sin comandante).
-				$time			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]) + (0.3 - $comandante_tecnos);
+				$time			= $Cost / ($CONF['game_speed'] * (1 + $PLANET[$resource[31]])) * pow(0.5, $PLANET[$resource[6]]);
 			}			
         }
 		

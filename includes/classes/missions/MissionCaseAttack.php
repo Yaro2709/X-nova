@@ -1,9 +1,10 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
 
@@ -203,7 +204,7 @@ class MissionCaseAttack extends MissionFunctions
 		$FleetDebris		= $ShootMetal + $ShootCrystal;
 		$DerbisMetal		= $targetPlanet['der_metal']+ $ShootMetal;
 		$DerbisCrystal		= $targetPlanet['der_crystal']+ $ShootCrystal;	
-		$MoonChance       	= min(round($FleetDebris / 100000 * MOON_CHANCE_FACTOR, 0), MAX_MOON_CHANCE);
+		$MoonChance       	= min(round($FleetDebris / 179400 * MOON_CHANCE_FACTOR, 0), MAX_MOON_CHANCE);
 		$UserChance 		= mt_rand(1, 100);
 		
 		if ($targetPlanet['planet_type'] == 1 && $targetPlanet['id_luna'] == 0 && $MoonChance > 0 && $UserChance <= $MoonChance)

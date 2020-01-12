@@ -1,10 +1,12 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
- * @link: http://www.xnovarevolution.con.ar
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
+ * @author web: http://www.bnarvaez.com
+ * @link: http://www.xnovarev.com
 
  * @package 2Moons
  * @author Slaver <slaver7@gmail.com>
@@ -26,8 +28,8 @@ $LNG['menu_convert']		= "Convert";
 
 $LNG['intro_lang']			= "Language";
 $LNG['intro_instal']		= "Installation";
-$LNG['intro_welcome']		= "Welcome to Cosmos!";
-$LNG['intro_text']			= "One of the best clones of OGame is 2 Moons.<br>The latest is and Cosmos the stablest flat rate was ever developed. Cosmos shines by stability, flexibility, dynamics, quality and user-friendliness. We hope always to be better than her expectations.<br><br>The installation system guides you through the install or upgrade from an older version to the latest. On questions or trouble don't hesitate to contact us.<br><br>Cosmos is an open source project licensed under the GNU GPL v3. For the license please click on the item in the menu.<br><br>Before the installation starts, a test is conducted, if system requirements are met.";
+$LNG['intro_welcome']		= "Welcome to Xnova Revolution Core Redesigned!";
+$LNG['intro_text']			= "One of the best clones of OGame is 2 Moons.<br>The latest is and Cosmos the stablest flat rate was ever developed. Cosmos shines by stability, flexibility, dynamics, quality and user-friendliness. We hope always to be better than her expectations.<br><br>The installation system guides you through the install or upgrade from an older version to the latest. On questions or trouble don't hesitate to contact us.<br><br>Cosmos is an open source project licensed under the GNU GPL v3. For the license please click on the item in the menu.<br><br>Before the installation starts, a test is conducted, if system requirements are met.<br><br><br><center><font color=\"red\"><b>It is recommended to have knowledge in Php for the self-support of the server.</b></font></center>";
 
 $LNG['reg_yes']				= "Yes";
 $LNG['reg_no']				= "No";

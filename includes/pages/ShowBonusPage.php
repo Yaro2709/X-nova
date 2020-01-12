@@ -1,12 +1,12 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
- * @Basic version of mod by noonn
 
  * @package 2Moons
  * @author Slaver <slaver7@gmail.com>
@@ -65,7 +65,8 @@ $aendern = $db->query("UPDATE ".PLANETS." SET metal_mine=metal_mine+2,
                               crystal_mine=crystal_mine+2,                 
 							  solar_plant=solar_plant+5,
 							  norio_mine=norio_mine+2,
-							  robot_factory=robot_factory+2
+							  robot_factory=robot_factory+2,
+							  field_current=field_current+13
                                WHERE `galaxy`='".$PLANET['galaxy']."'
                                AND `system` ='".$PLANET['system']."'
                                AND `planet` ='".$PLANET['planet']."'
@@ -85,7 +86,8 @@ $aendern = $db->query("UPDATE ".USERS." SET darkmatter=darkmatter-" .$cost_stor 
 $aendern = $db->query("UPDATE ".PLANETS." SET metal_store=metal_store+1,
                               crystal_store=crystal_store+1,
                               deuterium_store=deuterium_store+1,
-							  norio_store=norio_store+1
+							  norio_store=norio_store+1,
+							  field_current=field_current+4
                                WHERE `galaxy`='".$PLANET['galaxy']."'
                                AND `system` ='".$PLANET['system']."'
                                AND `planet` ='".$PLANET['planet']."'

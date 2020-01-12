@@ -1,9 +1,10 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
 
@@ -209,11 +210,11 @@ class ResourceUpdate
 			if($USER['geologe'] >= 1 xor $USER['raza'] == 0){
 			$norio_produccion = $Caps['norio_perhour']* (0.01 * $LEVEL);
 			$porcentaje = $norio_produccion * 10 / 100;
-			$this->PLANET['norio_perhour']    = $norio_produccion * $porcentaje ;
+			$this->PLANET['norio_perhour']    = $norio_produccion + $porcentaje ;
 			} elseif($USER['geologe'] >= 1 and $USER['raza'] == 0) {
 			$norio_produccion = $Caps['norio_perhour']* (0.01 * $LEVEL);
 			$porcentaje = $norio_produccion * 20 / 100;
-			$this->PLANET['norio_perhour']    = $norio_produccion * $porcentaje ;
+			$this->PLANET['norio_perhour']    = $norio_produccion + $porcentaje ;
 			} else {
 			$this->PLANET['norio_perhour']    = $Caps['norio_perhour']* (0.01 * $LEVEL) ;
 			}

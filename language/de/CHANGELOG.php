@@ -1,9 +1,10 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
  ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
 
@@ -22,7 +23,22 @@ $LNG['Version']     = 'Versi&oacute;n';
 $LNG['Description'] = 'Descripci&oacute;n';
 
 $LNG['changelog']   = array(
-'<font color="lime" size="1" face="arial"><b>XNOVA 5.8</b></font>' => 'xNovaRevolution Civilizations v5.8
+
+'<font color="lime" size="1" face="arial"><b>XNOVA 5.9</b></font>' => 'xNovaRevolution v5.9
+
+- FIX: Bug norium production with commander
+- FIX: Fix of fix Research time
+- FIX: Recycler errors
+- FIX: Fields with buildings added by Admin or Bonus Pack
+- FIX: Galaxy, System and Planet error position on register with new universe
+- FIX: Send Messages To Yourself by Giogio
+- FIX: Fleettrader
+- MOD: : CreateOnePlanetRecord Function optimized
+- MOD: ShowAccountEditorPage.php code optimized
+
+',
+
+'<font size="1" face="arial"><b>XNOVA 5.8</b></font>' => 'xNovaRevolution Civilizations v5.8
 
 - FIX: Battlesim by sromantr
 - FIX: Small display problem on overview

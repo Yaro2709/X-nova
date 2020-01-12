@@ -17,6 +17,7 @@ Message = {
                                 TEMP += (mess.type == 50 && Message.MessID != 999) ? Message.LNG.mg_game_message : mess.from;
                                 TEMP += '</td><td>'+mess.subject;
                                 mess.text = mess.text.replace(/[\']/g,"&#39;")
+								mess.subject = mess.subject.replace(/[\']/g,"&#39;")
 								TEMP += (mess.type == 1 && Message.MessID != 999) ? '<a href="#" onclick="return Dialog.PM('+mess.sender+', \''+Message.CreateAnswer(mess.subject)+'\', \''+encodeURIComponent(mess.text)+'\');" title="'+Message.LNG.mg_answer_to+' '+Message.stripHTML(mess.from)+'"><img style="padding-left: 2px;" src="'+Skin+'imagenes/otros/m.gif" border="0"></a>' : '';
                                 TEMP += '</td></tr><tr class="message_body message_'+mess.id+'"><td class="semi_remarcado" colspan="3">'+mess.text+'</td></tr>';
                                 if($.browser.webkit || $.browser.opera)

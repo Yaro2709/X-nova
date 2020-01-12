@@ -1,5 +1,3 @@
-<?php
-
 /**
  _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
  ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
@@ -18,16 +16,13 @@
 
  * Please do not remove the credits
 */
+Debes instalarlo en ingles para que pueda hacer la intalacion correctamente.
 
-function ShowCreditsPage()
-{
-	global $USER, $PLANET, $LNG, $LANG;
-
-	$PlanetRess = new ResourceUpdate();
-	$PlanetRess->CalcResource();
-	$PlanetRess->SavePlanetToDB();
-
-	$template	= new template();
-	$template->show("creditos_overview.tpl");
-}
-?>
+xNovaRevolution Core Redesigned v6.1
+- Cambio: La vista de la raza gultra
+- Agregado: El chat en la barra de navegaci&oacute;n, mejorado el mismo
+- Cambio: 20% aumentado la provabilidad de creaci&oacute;n de la luna con 1667 Cazadores ligeros
+- Agregado:  Una alerta para cuando tengas todas las colonias te avise!!
+- Arreglado: Tiempo de la Tecnolog&iacute;a
+- Arreglado: El Oficial “GEOGOLO” ya reduce el precio de las Minas
+- Arreglado: Las expediciones

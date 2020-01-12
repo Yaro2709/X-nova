@@ -1,9 +1,10 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
 
@@ -489,6 +490,17 @@ class ShowFleetPages extends FleetFunctions
 		$YourPlanet = false;
 		$UsedPlanet = false;
 	
+		if ($mission == 7)
+        {
+            $iPlanetCount     = $db->countquery("SELECT count(*) FROM ".PLANETS." WHERE `id_owner` = '". $USER['id'] ."' AND `planet_type` = '1' AND `destruyed` = '0';");
+            $MaxPlanets        = MaxPlanets($USER[$resource[124]]);
+            if($iPlanetCount >= $MaxPlanets)
+            {    
+                $TheMessage = sprintf($LNG['fl_colonisation_planet_limit'], $MaxPlanets);
+                $template->message("<font color=\"red\"><b>".$TheMessage."</b></font>", "game.php?page=fleet", 4);
+                exit;
+            }
+        }
 		if ($mission == 11)
 		{
 			$maxexpde = parent::GetCurrentFleets($USER['id'], 11);

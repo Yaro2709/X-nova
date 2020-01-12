@@ -1,9 +1,10 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
 
@@ -30,44 +31,54 @@ function ShowAccountEditorPage()
 		case 'resources':
 			$id         = request_var('id', 0);
 			$id_dark    = request_var('id_dark', 0);
-			$metal      = floattostring(round(abs(request_var('metal', 0.0)), 0));
-			$cristal    = floattostring(round(abs(request_var('cristal', 0.0)), 0));
-			$deut       = floattostring(round(abs(request_var('deut', 0.0)), 0));
-			$norio      = floattostring(round(abs(request_var('norio', 0.0)), 0));
+			$metal      = request_outofint('metal');
+			$cristal    = request_outofint('cristal');
+			$deut       = request_outofint('deut');
+			$norio       = request_outofint('norio');
 			$dark		= request_var('dark', 0);
 
 			if ($_POST)
 			{
+				if (!empty($id))
+					$before = $db->uniquequery("SELECT `metal`,`crystal`,`deuterium`,`norio`,`universe`  FROM ".PLANETS." WHERE `id` = '". $id ."';");
+				if (!empty($id_dark))
+					$before_dm = $db->uniquequery("SELECT `darkmatter` FROM ".USERS." WHERE `id` = '". $id_dark ."';");
+				
 				if ($_POST['add'])
-				{
-					$SQL  = "UPDATE ".PLANETS." SET ";
-					$SQL .= "`metal` = `metal` + '".$metal."', ";
-					$SQL .= "`crystal` = `crystal` + '".$cristal."', ";
-					$SQL .= "`deuterium` = `deuterium` + '".$deut ."', ";
-					$SQL .= "`norio` = `norio` + '".$norio ."' ";
-					$SQL .= "WHERE ";
-					$SQL .= "`id` = '". $id ."' AND `universe` = '".$_SESSION['adminuni']."';";
-					$db->query($SQL);
-
+				{			
+					if (!empty($id)) {
+						$SQL  = "UPDATE ".PLANETS." SET ";
+						$SQL .= "`metal` = `metal` + '".$metal."', ";
+						$SQL .= "`crystal` = `crystal` + '".$cristal."', ";
+						$SQL .= "`deuterium` = `deuterium` + '".$deut ."', ";
+						$SQL .= "`norio` = `norio` + '".$norio ."' ";
+						$SQL .= "WHERE ";
+						$SQL .= "`id` = '". $id ."' AND `universe` = '".$_SESSION['adminuni']."';";
+						$db->query($SQL);
+						$after 		= array('metal' => ($before['metal'] + $metal), 'crystal' => ($before['crystal'] + $cristal), 'deuterium' => ($before['deuterium'] + $deut), 'norio' => ($before['norio'] + $norio));
+						}
 					if (!empty($id_dark)) {
 						$SQL  = "UPDATE ".USERS." SET ";
 						$SQL .= "`darkmatter` = `darkmatter` + '". $dark ."' ";
 						$SQL .= "WHERE ";
 						$SQL .= "`id` = '". $id_dark ."' AND `universe` = '".$_SESSION['adminuni']."' ";
 						$db->query($SQL);
+						$after_dm 	= array('darkmatter' => ($before_dm['darkmatter'] + $dark));
 					}
-					$template->message($LNG['ad_add_sucess'], '?page=accounteditor&edit=resources');
 				}
 				elseif ($_POST['delete'])
-				{
-					$SQL  = "UPDATE ".PLANETS." SET ";
-					$SQL .= "`metal` = `metal` - '". $metal ."', ";
-					$SQL .= "`crystal` = `crystal` - '". $cristal ."', ";
-					$SQL .= "`deuterium` = `deuterium` - '". $deut ."', ";
-					$SQL .= "`norio` = `norio` - '". $norio ."' ";
-					$SQL .= "WHERE ";
-					$SQL .= "`id` = '".$id."' AND `universe` = '".$_SESSION['adminuni']."';";
-					$db->query($SQL);
+				{				
+					if (!empty($id)) {
+						$SQL  = "UPDATE ".PLANETS." SET ";
+						$SQL .= "`metal` = `metal` - '". $metal ."', ";
+						$SQL .= "`crystal` = `crystal` - '". $cristal ."', ";
+						$SQL .= "`deuterium` = `deuterium` - '". $deut ."', ";
+						$SQL .= "`norio` = `norio` - '". $norio ."' ";
+						$SQL .= "WHERE ";
+						$SQL .= "`id` = '".$id."' AND `universe` = '".$_SESSION['adminuni']."';";
+						$db->query($SQL);
+						$after 		= array('metal' => ($before['metal'] - $metal), 'crystal' => ($before['crystal'] - $cristal), 'deuterium' => ($before['deuterium'] - $deut), 'norio' => ($before['norio'] - $norio));
+					}
 
 					if (!empty($id_dark)) {
 						$SQL  = "UPDATE ".USERS." SET ";
@@ -75,13 +86,18 @@ function ShowAccountEditorPage()
 						$SQL .= "WHERE ";
 						$SQL .= "`id` = '". $id_dark ."';";
 						$db->query($SQL);
+						$after_dm 	= array('darkmatter' => ($before_dm['darkmatter'] - $dark));
 					}
+				}
+				
+				if ($_POST['add']) {
+					$template->message($LNG['ad_add_sucess'], '?page=accounteditor&edit=resources');
+				} else if ($_POST['delete']) {
 					$template->message($LNG['ad_delete_sucess'], '?page=accounteditor&edit=resources');
 				}
 				exit;
 			}
-			
-			
+						
 			$template->assign_vars(array(
 				'button_reset'		=> $LNG['button_reset'],
 				'button_delete'		=> $LNG['button_delete'],
@@ -102,37 +118,48 @@ function ShowAccountEditorPage()
 		case 'ships':
 			if($_POST)
 			{
+				$before1 = $db->uniquequery("SELECT * FROM ".PLANETS." WHERE `id` = '". request_var('id', 0) ."';");
+				$before = array();
+				$after = array();
+				foreach($reslist['fleet'] as $ID)
+				{
+					$before[$ID] = $before1[$resource[$ID]];
+				}			
 				if ($_POST['add'])
 				{
 					$SQL  = "UPDATE ".PLANETS." SET ";
 					foreach($reslist['fleet'] as $ID)
 					{
-						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` + '".floattostring(round(abs(request_var($resource[$ID], 0.0)), 0))."'";
+						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` + '".request_outofint($resource[$ID])."'";
+						$after[$ID] = $before[$ID] + request_outofint($resource[$ID]);
 					}
 					$SQL .= implode(", ", $QryUpdate);
 					$SQL .= "WHERE ";
 					$SQL .= "`id` = '".request_var('id', 0)."' AND `universe` = '".$_SESSION['adminuni']."';";
 					$db->query($SQL);
-
-					$template->message($LNG['ad_add_sucess_ships'], '?page=accounteditor&edit=ships');
 				}
 				elseif ($_POST['delete'])
 				{
 					$SQL  = "UPDATE ".PLANETS." SET ";
 					foreach($reslist['fleet'] as $ID)
 					{
-						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` - '".floattostring(round(abs(request_var($resource[$ID], 0.0)), 0))."'";
+						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` - '".request_outofint($resource[$ID])."'";
+						$after[$ID] = max($before[$ID] - request_outofint($resource[$ID]),0);
 					}
 					$SQL .= implode(", ", $QryUpdate);
 					$SQL .= "WHERE ";
 					$SQL .= "`id` = '".request_var('id', 0)."' AND `universe` = '".$_SESSION['adminuni']."';";
 					$db->query($SQL);
-					
-					$template->message($LNG['ad_delete_sucess_ships'], '?page=accounteditor&edit=ships');
+				}
+
+				if ($_POST['add']) {
+					$template->message($LNG['ad_add_sucess'], '?page=accounteditor&edit=resources');
+				} else if ($_POST['delete']) {
+					$template->message($LNG['ad_delete_sucess'], '?page=accounteditor&edit=resources');
 				}
 				exit;
 			}
-
+			
 			$parse['ships']	= "";
 			foreach($reslist['fleet'] as $ID)
 			{
@@ -157,36 +184,47 @@ function ShowAccountEditorPage()
 			$template->show('adm/AccountEditorPageShips.tpl');
 		break;
 
-		case 'defenses':
+case 'defenses':
 			if($_POST)
 			{
+				$before1 = $db->uniquequery("SELECT * FROM ".PLANETS." WHERE `id` = '". request_var('id', 0) ."';");
+				$before = array();
+				$after = array();
+				foreach($reslist['defense'] as $ID)
+				{
+					$before[$ID] = $before1[$resource[$ID]];
+				}
 				if ($_POST['add'])
 				{
 					$SQL  = "UPDATE ".PLANETS." SET ";
 					foreach($reslist['defense'] as $ID)
 					{
-						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` + '".floattostring(round(abs(request_var($resource[$ID], 0.0)), 0))."'";
+						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` + '".request_outofint($resource[$ID])."'";
+						$after[$ID] = $before[$ID] + request_outofint($resource[$ID]);
 					}
 					$SQL .= implode(", ", $QryUpdate);
 					$SQL .= "WHERE ";
 					$SQL .= "`id` = '".request_var('id', 0)."' AND `universe` = '".$_SESSION['adminuni']."';";
 					$db->query($SQL);
-
-					$template->message($LNG['ad_add_defenses_succes'], '?page=accounteditor&edit=defenses');
 				}
 				elseif ($_POST['delete'])
 				{
 					$SQL  = "UPDATE ".PLANETS." SET ";
 					foreach($reslist['defense'] as $ID)
 					{
-						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` - '".floattostring(round(abs(request_var($resource[$ID], 0.0)), 0))."'";
+						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` - '".request_outofint($resource[$ID])."'";
+						$after[$ID] = max($before[$ID] - request_outofint($resource[$ID]),0);
 					}
 					$SQL .= implode(", ", $QryUpdate);
 					$SQL .= "WHERE ";
 					$SQL .= "`id` = '".request_var('id', 0)."' AND `universe` = '".$_SESSION['adminuni']."';";
 					$db->query( $SQL);
-					$Name	=	$LNG['log_nomoree'];
-					$template->message($LNG['ad_delete_defenses_succes'], '?page=accounteditor&edit=defenses');
+				}
+				
+				if ($_POST['add']) {
+					$template->message($LNG['ad_add_sucess'], '?page=accounteditor&edit=resources');
+				} else if ($_POST['delete']) {
+					$template->message($LNG['ad_delete_sucess'], '?page=accounteditor&edit=resources');
 				}
 				exit;
 			}
@@ -218,37 +256,55 @@ function ShowAccountEditorPage()
 		case 'buildings':
 			if($_POST)
 			{
-				$PlanetData	= $db->uniquequery("SELECT `planet_type` FROM ".PLANETS." WHERE `id` = '".request_var('id', 0)."' AND `universe` = '".$_SESSION['adminuni']."';");
+				$PlanetData = $db->uniquequery("SELECT * FROM ".PLANETS." WHERE `id` = '". request_var('id', 0) ."';");
 				if(!isset($PlanetData))
 				{
 					$template->message($LNG['ad_add_not_exist'], '?page=accounteditor&edit=buildings');
 				}
-				if ($_POST['add'])
+				$before = array();
+				$after = array();
+				foreach($reslist['allow'][$PlanetData['planet_type']] as $ID)
 				{
+					$before[$ID] = $PlanetData[$resource[$ID]];
+				}
+				if ($_POST['add'])
+								{
+					$Fields	= 0;
 					$SQL  = "UPDATE ".PLANETS." SET ";
 					foreach($reslist['allow'][$PlanetData['planet_type']] as $ID)
 					{
-						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` + '".floattostring(round(abs(request_var($resource[$ID], 0.0)), 0))."'";
+						$Count			= request_outofint($resource[$ID]);
+						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` + '".$Count."'";
+						$after[$ID] 	= $before[$ID] + $Count;
+						$Fields			+= $Count;
 					}
 					$SQL .= implode(", ", $QryUpdate);
+					$SQL .= ", `field_current` = `field_current` + '".$Fields."'";
 					$SQL .= "WHERE ";
 					$SQL .= "`id` = '".request_var('id', 0)."' AND `universe` = '".$_SESSION['adminuni']."';";
 					$db->query($SQL);
-
-					$template->message($LNG['ad_add_succes'], '?page=accounteditor&edit=buildings');
 				}
 				elseif ($_POST['delete'])
 				{
+					$Fields	= 0;
 					$SQL  = "UPDATE ".PLANETS." SET ";
 					foreach($reslist['allow'][$PlanetData['planet_type']] as $ID)
 					{
-						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` - '".floattostring(round(abs(request_var($resource[$ID], 0.0)), 0))."'";
+						$Count			= request_outofint($resource[$ID]);
+						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` - '".$Count."'";
+						$after[$ID]		= max($before[$ID] - $Count,0);
+						$Fields			+= $Count;
 					}
 					$SQL .= implode(", ", $QryUpdate);
+					$SQL .= ", `field_current` = `field_current` - '".$Fields."'";
 					$SQL .= "WHERE ";
 					$SQL .= "`id` = '".request_var('id', 0)."' AND `universe` = '".$_SESSION['adminuni']."';";
 					$db->query($SQL);
-					
+				}
+
+				if ($_POST['add']) {
+					$template->message($LNG['ad_add_succes'], '?page=accounteditor&edit=buildings');
+				} else if ($_POST['delete']) {
 					$template->message($LNG['ad_delete_succes'], '?page=accounteditor&edit=buildings');
 				}
 				exit;
@@ -280,32 +336,43 @@ function ShowAccountEditorPage()
 		case 'researchs':
 			if($_POST)
 			{
+				$before1 = $db->uniquequery("SELECT * FROM ".USERS." WHERE `id` = '". request_var('id', 0) ."';");
+				$before = array();
+				$after = array();
+				foreach($reslist['tech'] as $ID)
+				{
+					$before[$ID] = $before1[$resource[$ID]];
+				}
 				if ($_POST['add'])
 				{
 					$SQL  = "UPDATE ".USERS." SET ";
 					foreach($reslist['tech'] as $ID)
 					{
-						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` + '".floattostring(round(abs(request_var($resource[$ID], 0.0)), 0))."'";
+						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` + '".request_outofint($resource[$ID])."'";
+						$after[$ID] = $before[$ID] + request_outofint($resource[$ID]);
 					}
 					$SQL .= implode(", ", $QryUpdate);
 					$SQL .= "WHERE ";
 					$SQL .= "`id` = '".request_var('id', 0)."' AND `universe` = '".$_SESSION['adminuni']."';";
 					$db->query($SQL);
-
-					$template->message($LNG['ad_add_succes'], '?page=accounteditor&edit=researchs');
 				}
 				elseif ($_POST['delete'])
 				{
 					$SQL  = "UPDATE ".USERS." SET ";
 					foreach($reslist['tech'] as $ID)
 					{
-						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` - '".floattostring(round(abs(request_var($resource[$ID], 0.0)), 0))."'";
+						$QryUpdate[]	= "`".$resource[$ID]."` = `".$resource[$ID]."` - '".request_outofint($resource[$ID])."'";
+						$after[$ID] = max($before[$ID] - request_outofint($resource[$ID]),0);
 					}
 					$SQL .= implode(", ", $QryUpdate);
 					$SQL .= "WHERE ";
 					$SQL .= "`id` = '".request_var('id', 0)."' AND `universe` = '".$_SESSION['adminuni']."';";
 					$db->query($SQL);
-	
+				}
+
+				if ($_POST['add']) {
+					$template->message($LNG['ad_add_succes'], '?page=accounteditor&edit=researchs');
+				} else if ($_POST['delete']) {
 					$template->message($LNG['ad_delete_succes'], '?page=accounteditor&edit=researchs');
 				}
 				exit;

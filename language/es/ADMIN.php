@@ -1,9 +1,10 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
 
@@ -52,7 +53,7 @@ $LNG['time_minutes']                                    = 'Minutos';
 $LNG['time_seconds']                                    = 'Segundos';
 //###########################################################//
 
-$LNG['info_information']	= 'xNova Revolution CORE 5';
+$LNG['info_information']	= 'xNova Revolution CORE 6';
 
 //---------------	¿SI O NO? - YES OR NO? - JA ODER NEIN?	------------------------//
 $LNG['one_is_yes'][1]                                   = 'Si';
@@ -277,7 +278,7 @@ $LNG['ma_message']                                      = 'Mensaje';
 
 
 //---------------	PAGINA DE INICIO - OVERVIEW	------------------------//
-$LNG['ow_title']					= 'Bienvenido a xNova Revolution';
+$LNG['ow_title']					= 'Bienvenido a xNova Revolution Core Redesigned';
 $LNG['ow_donate']						= 'Donación';
 $LNG['ow_welcome_text']                                 = 'Es agradable que formes parte del proyecto xNova Revolution (:';
 $LNG['ow_overview']                                     = 'Centro de Control';

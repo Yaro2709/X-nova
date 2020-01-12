@@ -1,12 +1,12 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
  ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
- * @version 5.6
 
  * @package 2Moons
  * @author Slaver <slaver7@gmail.com>
@@ -146,7 +146,7 @@ $LNG['rang_4']  = 'Civilización Colonial';
 $LNG['rang_5']  = 'Civilización Avanzada';
 $LNG['rang_6']  = 'Imperio Estelar';
 $LNG['rang_7']  = 'Imperio Galáctico';
-$LNG['rang_8']  = 'Imperio Avanzado';
+$LNG['rang_8']  = 'Imperio Elite';
 $LNG['rang_9']  = 'Imperio Dominante';
 $LNG['ov_fragatas'] = "Fragatas: ";
 $LNG['ov_cazador'] = "Cazadores: ";
@@ -216,11 +216,11 @@ $LNG['packs_coste'] = "Precio: ";
 $LNG['recursos_pack'] = "Pack de Recursos";
 $LNG['recursos_pack_descr'] = "Niobio: +10.000.000 <br />Germanio: +5.000.000 <br />Deuterio: +2.500.000";
 $LNG['minas_pack'] = "Pack de Mineros";
-$LNG['minas_pack_descr'] = "Mina de Niobio +2 <br />Mina de Germanio +2 <br />Mina de Norio +2 <br />Planta de Energía Solar +5 <br />Fábrica de Robots +2";
+$LNG['minas_pack_descr'] = "Mina de Niobio +1 <br />Mina de Germanio +1 <br />Mina de Norio +1 <br />Planta de Energía Solar +1 <br />Fábrica de Robots +1";
 $LNG['almacenes_pack'] = "Pack de Almacenes";
 $LNG['almacenes_pack_descr'] = "Almacen de Niobio +1 <br />Almacen de Germanio +1 <br />Almacen de Deuterio +1 <br />Almacen de Norio +1 ";
 $LNG['flotas_pack'] = "Pack de Foteros";
-$LNG['flotas_pack_descr']  = "Fragatas pequeñas: +300.000 <br />Fragatas medianas: +150.000 <br />Recicladores grandes: +500 <br />Deuterio: +3.000.000 ";
+$LNG['flotas_pack_descr']  = "Fragatas pequeñas: +300.000 <br />Fragatas medianas: +150.000 <br />Recicladores grandes: +50 <br />Deuterio: +3.000.000 ";
 $LNG['bunkers_pack'] = "Pack de Bunkeros";
 $LNG['bunkers_pack_descr'] = "Cúpula pequeña de protección +1 <br />Cúpula grande de protección +1 <br />Cúpula externa de protección +1 <br />Cañones iónicos: +20.000 ";
 $LNG['tecnos_pack'] = "Pack de Tecnología";
@@ -328,6 +328,7 @@ $LNG['fl_returning']						= 'Regresando';
 $LNG['fl_onway']							= 'En camino';
 $LNG['fl_r']								= '(R)';
 $LNG['fl_a']								= '(A)';
+$LNG['fl_colonisation_planet_limit']        = '¡Se ha alcanzado la cantidad máxima de planetas, %!';
 $LNG['fl_send_back']						= 'Regresar';
 $LNG['fl_acs']								= 'SAC';
 $LNG['fl_no_more_slots']					= 'Todos los slots de flotas estan siendo utilizados';
@@ -395,7 +396,7 @@ $LNG['fl_resources_left']					= 'Restante';
 $LNG['fl_all_resources']					= 'MAXIMOS RECURSOS DISPONIBLES';
 $LNG['fl_empty_target']					= 'No hay misiones disponibles (¿existe el planeta?)';
 $LNG['fl_expedition_alert_message']		= 'ATENCIÓN: ¡Las expediciones son misiones muy arriesgadas y puedes perder tus naves!';
-$LNG['fl_dm_alert_message']				= 'Ten cuidado, si en la %s, se encuentra %s, ¡tu flota será destruida!';
+$LNG['fl_dm_alert_message']				= 'Ten cuidado, en la %s, ¡Tu Flota Puede ser Destruida!';
 $LNG['fl_vacation_mode_active']			= 'Estás en modo vacaciones';
 $LNG['fl_expedition_tech_required']		= 'No se pudo enviar la expedición, antes tu imperio debe poseer la tecnología de expedición almenos en el nivel uno (1).';
 $LNG['fl_expedition_fleets_limit']			= 'Superado el limite de flotas de Expedicion.';
@@ -502,7 +503,7 @@ $LNG['rs_weekly']							= 'Por Semana:';
 //----------------------------------------------------------------------------//
 //TRADER
 $LNG['tr_empty_darkmatter']				= 'No tienes suficiente %s.';
-$LNG['tr_cost_dm_trader']					= 'El valor de las tasas es <font color=\'orange\'><b>%s</b></font> de %s';
+$LNG['tr_cost_dm_trader']					= '<p><strong>El valor de las tasas es <font color=\'orange\'><b>%s</b></font> de %s</strong></p>&nbsp;';
 $LNG['tr_almacenes']					= 'La información sobre la capacidad de tus almacenes puedes verla en tu visor de recursos o en la página de gestión de recursos.';
 $LNG['tr_only_positive_numbers']			= 'Sólo se pueden usar cantidades sobre cero.';
 $LNG['tr_elemento'] 						= 'Comprar unidades de ';
@@ -515,7 +516,7 @@ $LNG['tr_call_trader']						= 'Mercado de Recursos Intergaláctico';
 $LNG['tr_call_trader_who_buys']				= 'Llamar a un negociante que compre los siguientes recursos:';
 $LNG['tr_descr']							= 'Un comerciante solo proporciona tantos recursos como capacidad de almacenamiento haya disponible.';
 $LNG['tr_call_trader_submit']				= 'Negociar';
-$LNG['tr_exchange_quota']					= 'El tipo de intercambio es de 2/1/0.25/0.5';
+$LNG['tr_exchange_quota']					= '<p style="text-align: center">El tipo de intercambio es de 2/1/0.25/0.5</p>'; 
 $LNG['tr_sell_metal']						= 'Vender niobio';
 $LNG['tr_sell_crystal']					= 'Vender germanio';
 $LNG['tr_sell_deuterium']					= 'Vender deuterio';
@@ -578,6 +579,7 @@ $LNG['mg_type'][50]						    = 'Noticias del Juego';
 $LNG['mg_type'][99]   						= 'Informes de construcciones';
 $LNG['mg_type'][100]						= 'Ver todos los Mensajes';
 $LNG['mg_type'][999]						= 'Bandeja de Salida';
+$LNG['mg_id_to_id']  						= 'No puedes enviarte un mensaje a ti mismo';
 $LNG['mg_no_subject']						= 'Sin asunto';
 $LNG['mg_no_text']							= 'Falta el mensaje';
 $LNG['mg_msg_sended']						= '¡Mensaje enviado!';
@@ -818,7 +820,7 @@ $LNG['bu_decline']							= 'Rechazar';
 $LNG['bu_connected']						= 'Conectado';
 $LNG['bu_minutes']					= 'minutos';
 $LNG['bu_disconnected']					= 'Desconectado';
-$LNG['bu_online']							= 'Conectado';
+$LNG['bu_online']							= 'Conexión';
 $LNG['bu_buddy_list']						= 'Lista de compañeros';
 $LNG['bu_requests']						= 'Solicitudes';
 $LNG['bu_alliance']						= 'Alianza';
@@ -1073,7 +1075,7 @@ $LNG['ma_missiles_sended']					= ' misiles interplanetarios enviados. Objetivo p
 //----------------------------------------------------------------------------//
 // topkb.php
 $LNG['tkb_top']                  			= 'Top de Batallas';
-$LNG['tkb_gratz']                  		= 'Top 100 de mayores batallas';
+$LNG['tkb_gratz']                  		= 'Top de Mayores Batallas';
 $LNG['tkb_platz']                  		= 'Lugar';
 $LNG['tkb_owners']             			= 'Participantes';
 $LNG['tkb_datum']                  		= 'Fecha';

@@ -1,11 +1,12 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
- * @link: http://www.xnovarevforum.com.ar
+ * @link: http://www.xnovarev.com
 
  * @package 2Moons
  * @author Slaver <slaver7@gmail.com>
@@ -140,13 +141,17 @@ class ShowBuildingsPage
                 global $PLANET, $USER, $resource;
                         
                 $CurrentQueue           = unserialize($PLANET['b_building_id']);
-                
+				                
                 if (!empty($CurrentQueue)) {
                         $ActualCount    = count($CurrentQueue);
                 } else {
                         $CurrentQueue   = array();
                         $ActualCount    = 0;
                 }
+				
+				if($ActualCount >= 1 and $USER['commander'] <= 0) {
+				die(header("location:game.php?page=buildings"));  
+				}
                 
                 $CurrentMaxFields       = CalculateMaxPlanetFields($PLANET);
 
@@ -274,7 +279,7 @@ class ShowBuildingsPage
                         if (!IsTechnologieAccessible($USER, $PLANET, $Element))
                                 continue;
 
-                        $HaveRessources         = IsElementBuyable ($USER, $PLANET, $Element, true, false);
+                        $HaveRessources         = IsElementBuyable ($USER, $PLANET, $Element, true, false, ($USER['geologe'] >= 1));
                         if(in_array($Element, $reslist['prod']))
                         {
                                 $BuildLevel             = $PLANET[$resource[$Element]];
@@ -295,7 +300,7 @@ class ShowBuildingsPage
 		} 
                        
 					   if ($RoomIsOk && $CanBuildElement)
-                        $BulidLink = ($HaveRessources == true) ? '<a href="game.php?page=buildings&amp;cmd=insert&amp;building='.$Element.'"><img class="tooltip" name="<table><td>'.(($PLANET['b_building'] != 0) ? $LNG['bd_add_to_list'] : (($NextBuildLevel == 1) ? $LNG['bd_build'] : $LNG['bd_build_next_level'] . $NextBuildLevel)).'</td></table>" src="styles/theme/' .$skin_raza .'/imagenes/navegacion/construir.gif" /></a>' : '<img class="tooltip" name="<table><td>'.(($NextBuildLevel == 1) ? $LNG['no_recursos'] : $LNG['bd_build_next_level'] . $NextBuildLevel).'</td></table>" src="styles/theme/' .$skin_raza .'/imagenes/navegacion/construir_red.gif" />';
+                        $BulidLink = ($HaveRessources == true) ? '<a href="game.php?page=buildings&amp;cmd=insert&amp;building='.$Element.'"><img class="tooltip" name="<table><td>'.(($PLANET['b_building'] != 0) ? $LNG['bd_add_to_list'] : (($NextBuildLevel == 1) ? $LNG['bd_build'] : $LNG['bd_build_next_level'] . $NextBuildLevel)).'</td></table>" src="styles/theme/' .$skin_raza .'/imagenes/navegacion/construir.gif" /></a>' : '<img class="tooltip" name="<table><td>'.(($NextBuildLevel == 1 or $USER['commander'] <= 0) ? $LNG['no_recursos'] : $LNG['bd_build_next_level'] . $NextBuildLevel).'</td></table>" src="styles/theme/' .$skin_raza .'/imagenes/navegacion/construir_red.gif" />';
                         elseif ($RoomIsOk && !$CanBuildElement)
                                 $BulidLink = '<img class="tooltip" name="<table><td>'.(($NextBuildLevel == 1) ? $LNG['bd_build'] : $LNG['bd_build_next_level'] . $NextBuildLevel) .'</td></table>" src="styles/theme/' .$skin_raza .'/imagenes/navegacion/construir_red.gif" />';
                         else
@@ -304,7 +309,10 @@ class ShowBuildingsPage
                                 $BulidLink = '<img class="tooltip" name="<table><td>'.$LNG['bd_working'].'</td></table>" src="styles/theme/' .$skin_raza .'/imagenes/navegacion/construir_red.gif" />';
                         elseif (($Element == 15 || $Element == 21) && !empty($PLANET['b_hangar_id']))
                                 $BulidLink = '<img class="tooltip" name="<table><td>'.$LNG['bd_working'].'</td></table>" src="styles/theme/' .$skin_raza .'/imagenes/navegacion/construir_red.gif" />';
-                        
+						elseif (count($Queue) >= 1 and $USER['commander'] <= 0)
+						$BulidLink = '<img class="tooltip" name="<table><td>'.$LNG['bd_commander'].'</td></table>" src="styles/theme/' .$skin_raza .'/imagenes/navegacion/construir_red.gif" />';
+
+								
                         $BuildInfoList[]        = array(
                                 'id'                    => $Element,
                                 'name'                  => $LNG['tech'][$Element],
@@ -331,61 +339,7 @@ class ShowBuildingsPage
                                 'data'                          => json_encode(array('bd_cancel' => $LNG['bd_cancel'], 'bd_continue' => $LNG['bd_continue'], 'bd_finished' => $LNG['bd_finished'], 'build' => $Queue, 'nivel' => $LNG['bd_lvl'], 'raza_skin' => $skin_raza  )),
                         ));
                 }
-				
-	if($USER['raza'] == 0) {
-		$skin_raza = "gultra";
-		} elseif ($USER['raza'] == 1) {
-		$skin_raza = "voltra";
-		} 
-	
-   	if($PLANET['metal_mine'] > 0 and $PLANET['crystal_mine'] == 0 and $PLANET['deuterium_sintetizer'] == 0 and $PLANET['solar_plant'] == 0 ) {
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/1.jpg\" />";
-	}
-	if($PLANET['metal_mine'] > 0 and $PLANET['crystal_mine'] > 0 and $PLANET['deuterium_sintetizer'] == 0 and $PLANET['solar_plant'] == 0 ) {
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/1_2.jpg\" />";
-	}
-	if($PLANET['metal_mine'] > 0 and $PLANET['crystal_mine'] > 0 and $PLANET['deuterium_sintetizer'] > 0 and $PLANET['solar_plant'] == 0 ) {
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/1_2_3.jpg\" />";
-	}
-	if($PLANET['metal_mine'] > 0 and $PLANET['crystal_mine'] > 0 and $PLANET['deuterium_sintetizer'] > 0 and $PLANET['solar_plant'] > 0) {
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/1_2_3_4.jpg\" />";
-	}
-	if($PLANET['metal_mine'] > 0 and $PLANET['crystal_mine'] > 0 and $PLANET['solar_plant'] > 0 and $PLANET['deuterium_sintetizer'] == 0 ) {
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/1_2_4.jpg\" />";
-	}
-	if ( $PLANET['metal_mine'] > 0 and $PLANET['deuterium_sintetizer'] > 0 and $PLANET['solar_plant'] == 0 and $PLANET['crystal_mine'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/1_3.jpg\" />";
-	}	
-	if ( $PLANET['metal_mine'] > 0 and $PLANET['deuterium_sintetizer'] > 0 and $PLANET['solar_plant'] > 0 and $PLANET['crystal_mine'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/1_3_4.jpg\" />";
-	}		
-	if ( $PLANET['metal_mine'] > 0 and $PLANET['solar_plant'] > 0 and $PLANET['crystal_mine'] == 0 and $PLANET['deuterium_sintetizer'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/1_4.jpg\" />";
-	}
-	if ( $PLANET['crystal_mine'] > 0 and $PLANET['metal_mine'] == 0 and $PLANET['solar_plant'] == 0 and $PLANET['deuterium_sintetizer'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/2.jpg\" />";
-	}
-	if ( $PLANET['crystal_mine'] > 0 and $PLANET['deuterium_sintetizer'] > 0 and $PLANET['metal_mine'] == 0 and $PLANET['solar_plant'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/2_3.jpg\" />";
-	}	
-	if ( $PLANET['crystal_mine'] > 0 and $PLANET['deuterium_sintetizer'] > 0 and $PLANET['solar_plant'] > 0 and $PLANET['metal_mine'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/2_3_4.jpg\" />";
-	}	
-	if ( $PLANET['crystal_mine'] > 0 and $PLANET['solar_plant'] > 0 and $PLANET['deuterium_sintetizer'] == 0 and $PLANET['metal_mine'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/2_4.jpg\" />";
-	}
-	if ( $PLANET['deuterium_sintetizer'] > 0 and $PLANET['crystal_mine'] == 0 and $PLANET['solar_plant'] == 0 and $PLANET['metal_mine'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/3.jpg\" />";
-	}		
-	if ( $PLANET['deuterium_sintetizer'] > 0 and $PLANET['solar_plant'] > 0 and $PLANET['crystal_mine'] == 0 and $PLANET['metal_mine'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/3_4.jpg\" />";
-	}
-	if ( $PLANET['solar_plant'] > 0 and $PLANET['crystal_mine'] == 0 and $PLANET['deuterium_sintetizer'] == 0 and $PLANET['metal_mine'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/4.jpg\" />";
-	}		
-	if ( $PLANET['metal_mine'] == 0 and $PLANET['solar_plant'] == 0 and $PLANET['crystal_mine'] == 0 and $PLANET['deuterium_sintetizer'] == 0) { 
-		$header_planeta = "<img src=\"styles/theme/" .$skin_raza ."/adds/recursos/default.jpg\" />";
-	}
+
                 $template->assign_vars(array(
                         'BuildInfoList'                 => $BuildInfoList,
                         'bd_lvl'                                => $LNG['bd_lvl'],
@@ -402,7 +356,6 @@ class ShowBuildingsPage
                         'bd_jump_gate_action'   => $LNG['bd_jump_gate_action'],
                         'bd_price_for_destroy'  => $LNG['bd_price_for_destroy'],
                         'bd_destroy_time'               => $LNG['bd_destroy_time'],
-						'header'								=> $header_planeta,
                 ));
                         
                 $template->show("construibles/buildings_overview.tpl");

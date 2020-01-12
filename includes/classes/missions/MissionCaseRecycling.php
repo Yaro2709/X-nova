@@ -1,21 +1,22 @@
 <?php
 
 /**
-_  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
-¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
-* @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
+ * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
 
-* @package 2Moons
-* @author Slaver <slaver7@gmail.com>
-* @copyright 2009 Lucky <douglas@crockford.com> (XGProyecto)
-* @copyright 2011 Slaver <slaver7@gmail.com> (Fork/2Moons)
-* @license http://www.gnu.org/licenses/gpl.html GNU GPLv3 License
-* @version 1.3 (2011-01-21)
-* @link http://code.google.com/p/2moons/
+ * @package 2Moons
+ * @author Slaver <slaver7@gmail.com>
+ * @copyright 2009 Lucky <douglas@crockford.com> (XGProyecto)
+ * @copyright 2011 Slaver <slaver7@gmail.com> (Fork/2Moons)
+ * @license http://www.gnu.org/licenses/gpl.html GNU GPLv3 License
+ * @version 1.3 (2011-01-21)
+ * @link http://code.google.com/p/2moons/
 
-* Please do not remove the credits
+ * Please do not remove the credits
 */
 
 class MissionCaseRecycling extends MissionFunctions
@@ -68,7 +69,8 @@ class MissionCaseRecycling extends MissionFunctions
 				$RecycledGoods['crystal'] = $Target['der_crystal'];
 		}		
 	
-		$db->query("UPDATE ".PLANETS." SET `der_metal` = `der_metal` - ".$RecycledGoods['metal'].", `der_crystal` = `der_crystal` - ".$RecycledGoods['crystal']." WHERE `id` = '".$this->_fleet['fleet_end_id']."';");
+		#$db->query("UPDATE ".PLANETS." SET `der_metal` = `der_metal` - ".$RecycledGoods['metal'].", `der_crystal` = `der_crystal` - ".$RecycledGoods['crystal']." WHERE `id` = '".$this->_fleet['fleet_end_id']."';");
+		$db->query("UPDATE ".PLANETS." SET `der_metal` = `der_metal` - ".(isset($RecycledGoods['metal']) ? $RecycledGoods['metal'] : 0).", `der_crystal` = `der_crystal` - ".(isset($RecycledGoods['crystal']) ? $RecycledGoods['crystal'] : 0)." WHERE `id` = '".$this->_fleet['fleet_end_id']."';");
 
 		$LNG			= $LANG->GetUserLang($this->_fleet['fleet_owner']);
 		$Message 		= @sprintf($LNG['sys_recy_gotten'], pretty_number($RecycledGoods['metal']), $LNG['Metal'], pretty_number($RecycledGoods['crystal']), $LNG['Crystal']);

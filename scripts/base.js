@@ -202,7 +202,8 @@ var Dialog      = {
         PM: function(ID, Subject, Message) {
                 if(typeof Subject !== 'string')
                         Subject = '';
-                        
+               Subject = Subject.replace("&apostrofo", "'");
+			   
                 Dialog.create();
                 $(Dialog.div).dialog('open').load('game.php?page=messages&mode=write&id='+ID+'&subject='+encodeURIComponent(Subject), function() {
                         $(this).dialog('option', 'buttons', {Send:function(){if($('#text').val().length==0){Dialog.alert($('#empty').text());}else{$.get('game.php?page=messages&mode=write&id='+ID+'&send=1&'+$('#message').serialize(),function(data){Dialog.alert(data,Dialog.close)})}}})

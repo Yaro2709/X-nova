@@ -1,10 +1,12 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
- * @link: http://www.xnovarevolution.con.ar
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
+ * @author web: http://www.bnarvaez.com
+ * @link: http://www.xnovarev.com
 
  * @package 2Moons
  * @author Slaver <slaver7@gmail.com>
@@ -290,7 +292,7 @@ $LNG['ma_message']					= 'Message';
 //###########################################################//
 
 //---------------	OVERVIEW	------------------------//
-$LNG['ow_title']					= 'Welcome to xNova Revolution';
+$LNG['ow_title']					= 'Welcome to xNova Revolution Core Redesigned';
 $LNG['ow_donate']					= 'Donation';
 $LNG['ow_welcome_text']					= 'Welcome to the ever popular xNova Revolution. (:';
 $LNG['ow_overview']					= 'Control Panel';

@@ -1,12 +1,13 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
- 
+
  * @package 2Moons
  * @author Slaver <slaver7@gmail.com>
  * @copyright 2009 Lucky <douglas@crockford.com> (XGProyecto)
@@ -37,7 +38,8 @@ function ShowModulePage()
 	}
 	
 	asort($Modules);
-	$template	= new template();
+	$template	= new template();
+
 	$template->assign_vars(array(
 		'Modules'				=> $Modules,
 		'mod_module'			=> $LNG['mod_module'],

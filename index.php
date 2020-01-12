@@ -1,9 +1,10 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
 
@@ -30,7 +31,7 @@ define('LOGIN', true );
 define('ROOT_PATH', str_replace('\\', '/',dirname(__FILE__)).'/');
 
 if(!file_exists(ROOT_PATH.'includes/config.php')) {
-	header('Location: install.php?lang=hu');
+	header('Location: install.php?lang=es');
 	exit;
 }
 
@@ -43,153 +44,6 @@ $page = request_var('page', '');
 $mode = request_var('mode', '');
 
 switch ($page) {
-	case 'facebook':
-		if($CONF['fb_on'] == 0)
-			redirectTo("index.php");
-
-		$CONF		= $db->uniquequery("SELECT `users_amount`, `fb_apikey`, `fb_skey`, `initial_fields`, `LastSettedGalaxyPos`, `LastSettedSystemPos`, `LastSettedPlanetPos`, `smtp_host`, `smtp_port`, `smtp_user`, `smtp_pass`, `game_name`, `users_amount` FROM ".CONFIG." WHERE `uni` = ".$UNI.";");
-			
-		include_once(ROOT_PATH . 'includes/libs/facebook/facebook.php');
-		$facebook = new Facebook(array(
-		  'appId'  => $CONF['fb_apikey'],
-		  'secret' => $CONF['fb_skey'],
-		  'cookie' => true,
-		));
-		$session = $facebook->getSession();
-
-		// Session based API call.
-		if (!$session)
-			redirectTo("index.php");
-
-		$uid = $facebook->getUser();
-
-		if (!$uid)
-		redirectTo("index.php");
-
-		$login = $db->uniquequery("SELECT `id`, `username`, `dpath`, `authlevel`, `id_planet` FROM ".USERS." WHERE `universe` = '".$UNI."' AND `fb_id` = '".$uid."';");
-		if (isset($login)) {
-			session_start();
-			$SESSION       	= new Session();
-			$SESSION->CreateSession($login['id'], $login['username'], $login['id_planet'], $UNI, $login['authlevel'], $login['dpath']);
-			
-			redirectTo("game.php?page=overview");
-		} else {
-			$me = $facebook->api('/me');
-			$UserMail 	=  $me['email'];
-			
-			$Exist['alruser'] = $db->uniquequery("SELECT `id`, `username`, `dpath`, `authlevel`, `id_planet` FROM ".USERS." WHERE `email` = '".$UserMail."';");
-			if(isset($Exist['alruser']))
-			{
-				$db->query("UPDATE `".USERS."` SET `fb_id` = '".$uid."' WHERE `id` = '".$Exist['alruser']['id']."';");
-				session_start();
-				$SESSION       	= new Session();
-				$SESSION->CreateSession($Exist['alruser']['id'], $Exist['alruser']['username'], $Exist['alruser']['id_planet'], $UNI, $Exist['alruser']['authlevel'], $Exist['alruser']['dpath']);
-				redirectTo("game.php?page=overview");
-			}
-			
-			$Caracters = "aazertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN1234567890";
-			$Count = strlen($Caracters);
-			$Taille = 8;
-			$NewPass = "";
-			for($i = 0; $i < $Taille; $i ++) {
-				$CaracterBoucle = rand ( 0, $Count - 1 );
-				$NewPass .= substr ( $Caracters, $CaracterBoucle, 1 );
-			}
-			
-			$UserName 		= $db->sql_escape($me['name']);
-			$UserIP 		= $_SERVER["REMOTE_ADDR"];				
-			$UserPass		= md5($NewPass);
-			$IfNameExist	= false;
-			$i				= "(1)";
-			
-			while(!$IfNameExist)
-			{
-				$Exist['userv'] = $db->uniquequery("SELECT username FROM ".USERS." WHERE username = '".$UserName."' AND `universe` = '".$UNI."';");
-				$Exist['valid'] = $db->uniquequery("SELECT username FROM ".USERS_VALID." WHERE username = '".$UserName."' AND `universe` = '".$UNI."';");
-				if(!isset($Exist['userv']) && !isset($Exist['valid']))
-					$IfNameExist	= true;
-				else
-					$UserName		= $i.$UserName;
-			}
-			
-			$SQL = "INSERT INTO ".USERS." SET ";
-			$SQL .= "`username` = '" .$db->sql_escape($UserName)."', ";
-			$SQL .= "`universe` = '" .$UNI."', ";
-			$SQL .= "`email` = '" . $UserMail . "', ";
-			$SQL .= "`email_2` = '" . $UserMail . "', ";
-			$SQL .= "`ip_at_reg` = '" . $UserIP . "', ";
-			$SQL .= "`id_planet` = '0', ";
-			$SQL .= "`onlinetime` = '".TIMESTAMP."', ";
-			$SQL .= "`register_time` = '".TIMESTAMP."', ";
-			$SQL .= "`password` = '" . $UserPass . "', ";
-			$SQL .= "`lang` = '".$LANG->GetUser()."', ";
-			$SQL .= "`dpath` = '".DEFAULT_THEME."', ";
-			$SQL .= "`darkmatter` = '".BUILD_FB_DARKMATTER."', ";
-			$SQL .= "`fb_id` = '" . $uid . "', ";
-			$SQL .= "`uctime`= '0';";
-			$db->query($SQL);
-		
-			if($CONF['mail_active'] == 1)
-			{				
-				$MailSubject	= sprintf($LNG['reg_mail_reg_done'], $CONF['game_name']);	
-				#$MailRAW		= file_get_contents("./language/".$CONF['lang']."/email/email_reg_done.txt");
-				$MailRAW		= $LANG->getMail('email_lost_password');
-				$MailContent	= sprintf($MailRAW, $UserName, $CONF['game_name']);	
-				MailSend($UserMail, $UserName, $MailSubject, $MailContent);
-				$MailRAW		= file_get_contents("./language/".$CONF['lang']."/email/email_lost_password.txt");
-				$MailContent	= sprintf($MailRAW, $ExistMail['username'], $CONF['game_name'], $NewPass, "http://".$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"]);			
-				MailSend($UserMail, $UserName, $LNG['mail_title'], $MailContent);		
-			}
-			
-			$NewUser = $db->GetInsertID();
-			
-			$LastSettedGalaxyPos = $CONF['LastSettedGalaxyPos'];
-			$LastSettedSystemPos = $CONF['LastSettedSystemPos'];
-			$LastSettedPlanetPos = $CONF['LastSettedPlanetPos'];
-			require_once(ROOT_PATH.'includes/functions/CreateOnePlanetRecord.php');
-			$PlanetID = false;
-			
-			while ($PlanetID === false) {
-				$Planet = mt_rand(4, 12);
-				if ($LastSettedPlanetPos < 3) {
-					$LastSettedPlanetPos += 1;
-				} else {
-					if ($LastSettedSystemPos == MAX_SYSTEM_IN_GALAXY) {
-						$LastSettedGalaxyPos += 1;
-						$LastSettedSystemPos = 1;
-						$LastSettedPlanetPos = 1;
-					} else {
-						$LastSettedSystemPos += 1;
-						$LastSettedPlanetPos = 1;
-					}
-				}
-				
-				$PlanetID = CreateOnePlanetRecord($LastSettedGalaxyPos, $LastSettedSystemPos, $Planet, $UNI, $NewUser, $UserPlanet, true);
-			}
-			
-			$SQL = "UPDATE " .USERS." SET ";
-			$SQL .= "`id_planet` = '".$PlanetID."', ";
-			$SQL .= "`galaxy` = '".$LastSettedGalaxyPos."', ";
-			$SQL .= "`system` = '".$LastSettedSystemPos."', ";
-			$SQL .= "`planet` = '".$Planet."' ";
-			$SQL .= "WHERE ";
-			$SQL .= "`id` = '".$NewUser."' ";
-			$SQL .= "LIMIT 1;";
-			$SQL .= "INSERT INTO ".STATPOINTS." (`id_owner`, `id_ally`, `stat_type`, `tech_rank`, `tech_old_rank`, `tech_points`, `tech_count`, `build_rank`, `build_old_rank`, `build_points`, `build_count`, `defs_rank`, `defs_old_rank`, `defs_points`, `defs_count`, `fleet_rank`, `fleet_old_rank`, `fleet_points`, `fleet_count`, `total_rank`, `total_old_rank`, `total_points`, `total_count`) VALUES (".$NewUser.", 0, 1, '".($CONF ['users_amount'] + 1)."', '".($CONF ['users_amount'] + 1)."', 0, 0, '".($CONF ['users_amount'] + 1)."', '".($CONF ['users_amount'] + 1)."', 0, 0, '".($CONF ['users_amount'] + 1)."', '".($CONF ['users_amount'] + 1)."', 0, 0, 1, 0, 0, 0, '".($CONF ['users_amount'] + 1)."', '".($CONF ['users_amount'] + 1)."', 0, 0);";				
-			$db->multi_query ( $SQL );
-			
-			$from 		= $LNG ['welcome_message_from'];
-			$Subject 	= $LNG ['welcome_message_subject'];
-			$message 	= sprintf($LNG['welcome_message_content'], $CONF['game_name']);
-			SendSimpleMessage($NewUser, 1, $Time, 1, $from, $Subject, $message );
-							
-			update_config(array('LastSettedGalaxyPos' => $LastSettedGalaxyPos, 'LastSettedSystemPos' => $LastSettedSystemPos, 'LastSettedPlanetPos' => $LastSettedPlanetPos, 'users_amount' => $CONF['users_amount'] + 1), false, $UNI);
-			session_start();
-			$SESSION       	= new Session();
-			$SESSION->CreateSession($NewUser, $UserName, $PlanetID, $UNI);
-			redirectTo("game.php?page=overview");
-		}
-	break;
 	case 'lostpassword': 
 		if ($mode == "send") {
 			$USERmail = request_var('email', '');
@@ -354,7 +208,7 @@ switch ($page) {
 				$SQL .= "`register_time` = '".TIMESTAMP. "', ";
 				$SQL .= "`password` = '".$UserPass."', ";
 				$SQL .= "`dpath` = '".DEFAULT_THEME."', ";
-				$SQL .= "`darkmatter` = '".BUILD_DARKMATTER."', ";
+				$SQL .= "`darkmatter` = '".$CONF['darkmatter_start']."', ";
 				$SQL .= "`uctime`= '0';";
 				$db->query($SQL);
 				$NewUser = $db->GetInsertID();
@@ -373,6 +227,7 @@ switch ($page) {
 				
 				while ($PlanetID === false) {
 					$Planet = mt_rand(4, 12);
+									
 					if ($LastSettedPlanetPos < 3) {
 						$LastSettedPlanetPos += 1;
 					} else {
@@ -384,6 +239,9 @@ switch ($page) {
 							$LastSettedSystemPos += 1;
 							$LastSettedPlanetPos = 1;
 						}
+						
+						if($LastSettedGalaxyPos  > $CONF['max_system'])
+							$LastSettedGalaxyPos	= 1;
 					}
 					
 					$PlanetID = CreateOnePlanetRecord($LastSettedGalaxyPos, $LastSettedSystemPos, $Planet, $UserUni, $NewUser, $UserPlanet, true);

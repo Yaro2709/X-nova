@@ -1,12 +1,13 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
- 
+
  * @package 2Moons
  * @author Slaver <slaver7@gmail.com>
  * @copyright 2009 Lucky <douglas@crockford.com> (XGProyecto)
@@ -20,7 +21,7 @@
 
 if(!defined('INSIDE')) die('Hacking attempt!');
 
-	function IsElementBuyable ($USER, $PLANET, $Element, $Incremental = true, $ForDestroy = false)
+	function IsElementBuyable ($USER, $PLANET, $Element, $Incremental = true, $ForDestroy = false, $HasGeologist = false)
 	{
 		global $pricelist, $resource;
 
@@ -41,6 +42,10 @@ if(!defined('INSIDE')) die('Hacking attempt!');
 			
 			$cost[$ResType] = $Incremental ? floor($pricelist[$Element][$ResType] * pow($pricelist[$Element]['factor'], $level)) : floor($pricelist[$Element][$ResType]);
 
+			if ($HasGeologist) {
+    			$percentage = $cost[$ResType] * 20 / 100;
+   				$cost[$ResType] = $cost[$ResType] - $percentage;
+			}
 			if ($ForDestroy)
 				$cost[$ResType]  = floor($cost[$ResType] / 2);
 

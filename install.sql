@@ -1,8 +1,10 @@
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
- * @link: http://www.xnovarevolution.con.ar
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
+ * @author web: http://www.bnarvaez.com
+ * @link: http://www.xnovarev.com
 
  * @package 2Moons
  * @author Slaver <slaver7@gmail.com>
@@ -116,14 +118,18 @@ CREATE TABLE `prefix_config`(
   `game_name` varchar(30) NOT NULL,
   `game_disable` tinyint(1) unsigned NOT NULL,
   `close_reason` text NOT NULL,
+  `max_galaxy` tinyint(3) unsigned NOT NULL DEFAULT '9',
+  `max_system` smallint(5) unsigned NOT NULL DEFAULT '400',
+  `max_planets` tinyint(3) unsigned NOT NULL DEFAULT '20',
   `metal_basic_income` int(11) NOT NULL,
   `crystal_basic_income` int(11) NOT NULL,
   `deuterium_basic_income` int(11) NOT NULL,
   `norio_basic_income` int(11) NOT NULL,
   `energy_basic_income` int(11) NOT NULL,
-  `LastSettedGalaxyPos` tinyint(3) unsigned NOT NULL,
-  `LastSettedSystemPos` smallint(5) unsigned NOT NULL,
-  `LastSettedPlanetPos` tinyint(3) unsigned NOT NULL,
+  `planet_factor` float(2,1) NOT NULL DEFAULT '1.0',
+  `LastSettedGalaxyPos` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `LastSettedSystemPos` smallint(5) unsigned NOT NULL DEFAULT '1',
+  `LastSettedPlanetPos` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `noobprotection` int(11) NOT NULL,
   `noobprotectiontime` int(11) NOT NULL,
   `noobprotectionmulti` int(11) NOT NULL,
@@ -168,6 +174,11 @@ CREATE TABLE `prefix_config`(
   `smtp_sendmail` varchar(64) NOT NULL,
   `smail_path` varchar(30) NOT NULL,
   `user_valid` tinyint(1) NOT NULL,
+  `metal_start` int(11) unsigned NOT NULL DEFAULT '500',
+  `crystal_start` int(11) unsigned NOT NULL DEFAULT '500',
+  `deuterium_start` int(11) unsigned NOT NULL DEFAULT '0',
+  `norio_start` int(11) unsigned NOT NULL DEFAULT '0',
+  `darkmatter_start` int(11) unsigned NOT NULL DEFAULT '0',
   `ftp_server` varchar(64) NOT NULL,
   `ftp_user_name` varchar(64) NOT NULL,
   `ftp_user_pass` varchar(32) NOT NULL,
@@ -184,7 +195,7 @@ CREATE TABLE `prefix_config`(
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `prefix_config` (`uni`, `VERSION`, `users_amount`, `game_speed`, `fleet_speed`, `resource_multiplier`, `halt_speed`, `Fleet_Cdr`, `Defs_Cdr`, `initial_fields`, `bgm_active`, `bgm_file`, `uni_name`, `game_name`, `game_disable`, `close_reason`, `metal_basic_income`, `crystal_basic_income`, `deuterium_basic_income`,  `norio_basic_income`,  `energy_basic_income`, `LastSettedGalaxyPos`, `LastSettedSystemPos`, `LastSettedPlanetPos`, `noobprotection`, `noobprotectiontime`, `noobprotectionmulti`, `forum_url`, `adm_attack`, `debug`, `lang`, `stat`, `stat_level`, `stat_last_update`, `stat_settings`, `stat_update_time`, `stat_last_db_update`, `stats_fly_lock`, `stat_last_banner_update`, `stat_banner_update_time`, `cron_lock`, `ts_modon`, `ts_server`, `ts_tcpport`, `ts_udpport`, `ts_timeout`, `ts_version`, `reg_closed`, `OverviewNewsFrame`, `OverviewNewsText`, `capaktiv`, `cappublic`, `capprivate`, `min_build_time`, `smtp_host`, `smtp_port`, `smtp_user`, `smtp_pass`, `smtp_ssl`, `smtp_sendmail`, `user_valid`, `ftp_server`, `ftp_user_name`, `ftp_user_pass`, `ftp_root_path`, `fb_on`, `fb_apikey`, `fb_skey`, `ga_active`, `ga_key`, `moduls`, `trade_allowed_ships`, `trade_charge`, `mail_active`, `mail_use`, `smail_path`) VALUES
-(1, '5.8', 1, 2500, 2500, 1, 1, 30, 30, 250, 0, '', 'Universo 1', 'xNova Revolution', 1, 'El juego se encuentra actualmente cerrado.', 20, 10, 0, 0, 0, 1, 1, 1, 0, 5000, 5, 'http://xnovarev.com/', 1, 0, 'es', 0, 2, 1288527583, 1000, 25, 1288860107, 0, 1288860107, 1440, 0, 0, '127.0.0.1', 8767, 51234, 1, 2, 0, 1, 'Bienvenido a xNova Revolution 5 Redesign, por favor pasate por el foro oficial para que te familiarices con el nuevo entorno y aprendas a desarrollar.', 0, '', '', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '0', '', '1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1', '202,208,206,207', '0.3', 0, 0, '/usr/sbin/sendmail');
+(1, '6.1', 1, 2500, 2500, 1, 1, 30, 30, 250, 0, '', 'Universo 1', 'xNova Revolution Redesigned', 1, 'El juego se encuentra actualmente cerrado.', 20, 10, 0, 0, 0, 1, 1, 1, 0, 5000, 5, 'http://xnovarev.com/', 1, 0, 'es', 0, 2, 1288527583, 1000, 25, 1288860107, 0, 1288860107, 1440, 0, 0, '127.0.0.1', 8767, 51234, 1, 2, 0, 1, 'Bienvenido a xNova Revolution Core Redesigned 6.1, por favor pasate por el foro oficial para que te familiarices con el nuevo entorno y aprendas a desarrollar.', 0, '', '', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '0', '', '1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1', '202,208,206,207', '0.3', 0, 0, '/usr/sbin/sendmail');
 
 CREATE TABLE `prefix_diplo` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

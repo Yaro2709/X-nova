@@ -1,9 +1,10 @@
 <?php
 
 /**
- _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |5
- ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core.
+ _  \_/ |\ | /¯¯\ \  / /\    |¯¯) |_¯ \  / /¯¯\ |  |   |´¯|¯` | /¯¯\ |\ |6
+ ¯  /¯\ | \| \__/  \/ /--\   |¯¯\ |__  \/  \__/ |__ \_/   |   | \__/ | \|Core Redesigned.
  * @author: Copyright (C) 2011 by Brayan Narvaez (Prinick) developer of xNova Revolution
+ * @author: Copyright (C) 2017 by Yamil Readigos Hurtado (YamilRH) <ireadigos@gmail.com> Redesigned of xNova Revolution 6.1
  * @author web: http://www.bnarvaez.com
  * @link: http://www.xnovarev.com
 
@@ -17,7 +18,7 @@
 
  * Please do not remove the credits
 */
-
+ 
 $LNG['continue']			= "Continuar";
 
 $LNG['menu_intro']			= "Intro";
@@ -26,8 +27,8 @@ $LNG['menu_license']		= "Licencia";
 
 $LNG['intro_lang']			= "Idioma";
 $LNG['intro_instal']		= "Instalaci&oacute;n";
-$LNG['intro_welcome']		= "Bienvenido a xNova Revolution Redesign";
-$LNG['intro_text']			= "xNova Revolution es un juego de estrategia en el espacio, trabajado sobre la version 1.3 de 2moons, el proyecto cuenta con un <a href=\"http://xnovarev.com/index.php\" target=\"_blank\">foro</a> de soporte oficial en el cual podran encontrar mayor informaci&oacute;n.<br /><br />El sistema de instalaci&oacute;n le guiar&aacute; a trav&eacute;s de la instalaci&oacute;n.<br>xNova Revolution es un proyecto de c&oacute;digo abierto bajo la licencia GNU GPL v3. Para la licencia por favor haga clic en el elemento correspondiente localizado en el men&uacute;.<br><br>Antes de la instalaci&oacute;n, se comprueban las caracteristicas del servidor, si se cumplen los requisitos del sistema continuar&aacute; la instalaci&oacute;n.<br><br><br><center><font color=\"red\">Se recomienda tener conocimientos en Php para el autosoporte del servidor.</font></center>";
+$LNG['intro_welcome']		= "Bienvenido a xNova Revolution Core Redesigned";
+$LNG['intro_text']			= "<h1><center><font color=\"red\">Para que la Instalaci&oacute;n se complete correctamente debe seleccionar el Idioma en English.</font></center></h1><br><br><br> xNova Revolution es un juego de estrategia en el espacio, trabajado sobre la version 1.3 de 2moons, el proyecto cuenta con un <a href=\"http://xnovarev.com/index.php\" target=\"_blank\">foro</a> de soporte oficial en el cual podran encontrar mayor informaci&oacute;n.<br /><br />El sistema de instalaci&oacute;n le guiar&aacute; a trav&eacute;s de la instalaci&oacute;n.<br>xNova Revolution es un proyecto de c&oacute;digo abierto bajo la licencia GNU GPL v3. Para la licencia por favor haga clic en el elemento correspondiente localizado en el men&uacute;.<br><br>Antes de la instalaci&oacute;n, se comprueban las caracteristicas del servidor, si se cumplen los requisitos del sistema continuar&aacute; la instalaci&oacute;n.<br><br><br><center><font color=\"red\"><b>Se recomienda tener conocimientos en Php para el autosoporte del servidor.</b></font></center>";
 
 $LNG['reg_yes']			    = "S&iacute;";
 $LNG['reg_no']				= "No";
